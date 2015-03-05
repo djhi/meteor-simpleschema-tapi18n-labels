@@ -1,6 +1,6 @@
 Package.describe({
   name: 'gildaspk:simpleschema-tapi18n-labels',
-  version: '0.0.1',
+  version: '0.0.2',
   summary: 'Allows to use Tapi18n for schemas labels',
   git: 'https://github.com/djhi/meteor-simpleschema-tapi18n-labels.git',
 });

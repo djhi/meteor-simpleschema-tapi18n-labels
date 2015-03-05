@@ -1,22 +1,26 @@
 SimpleSchema.extendOptions
   i18nLabel: Match.Optional String
 
-SimpleSchema.prototype.originalLabel = SimpleSchema.prototype.label
+((originalLabel) ->
+  # Cache the original method
 
-SimpleSchema.prototype.label = (key) ->
-  result = null
+  SimpleSchema::label = (key) ->
+    result = null
 
-  if key is null then return this.originalLabel()
+    if key is null then return this.originalLabel()
 
-  fieldDefinition = this.getDefinition key
+    fieldDefinition = this.getDefinition key
 
-  if fieldDefinition and fieldDefinition.i18nLabel
-    language = SimpleSchemaTapi18n.getLanguage()
-    result = TAPi18n.__ fieldDefinition.i18nLabel, {}, language
-  else
-    result = this.originalLabel key
+    if fieldDefinition and fieldDefinition.i18nLabel
+      language = SimpleSchemaTapi18n.getLanguage()
+      result = TAPi18n.__ fieldDefinition.i18nLabel, {}, language
+    else
+      result = originalLabel.apply this, arguments
 
-  result
+    result
+
+  return
+) SimpleSchema::label
 
 defaultLanguage = Package["tap:i18n"].TAPi18n.translations[0]
 
